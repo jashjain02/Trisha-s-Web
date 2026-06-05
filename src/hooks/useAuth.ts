@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import {
   onAuthStateChanged,
-  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   signOut as firebaseSignOut,
   type User as FirebaseUser,
 } from 'firebase/auth'
@@ -34,6 +35,9 @@ export function useAuth() {
   })
 
   useEffect(() => {
+    // Handle redirect result from signInWithRedirect
+    getRedirectResult(auth).catch(() => {})
+
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (!firebaseUser) {
         setState({ user: null, firebaseUser: null, isAdmin: false, isPending: false, isRejected: false, isNewUser: false, loading: false, error: null })
@@ -105,7 +109,7 @@ export function useAuth() {
   async function signInWithGoogle() {
     setState((prev) => ({ ...prev, loading: true, error: null }))
     try {
-      await signInWithPopup(auth, googleProvider)
+      await signInWithRedirect(auth, googleProvider)
     } catch {
       setState((prev) => ({ ...prev, loading: false, error: 'Sign in failed. Please try again.' }))
     }
