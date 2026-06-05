@@ -36,7 +36,10 @@ export function useAuth() {
 
   useEffect(() => {
     // Handle redirect result from signInWithRedirect
-    getRedirectResult(auth).catch(() => {})
+    getRedirectResult(auth).catch((err) => {
+      console.error('Redirect sign-in error:', err)
+      setState((prev) => ({ ...prev, loading: false, error: err.message || 'Sign in failed.' }))
+    })
 
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (!firebaseUser) {
