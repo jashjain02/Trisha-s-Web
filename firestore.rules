@@ -1,0 +1,79 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() &&
+        request.auth.token.email == request.resource.data.adminEmail;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // Users collection
+    match /users/{userId} {
+      // Anyone signed in can read user profiles (for leaderboard)
+      allow read: if isSignedIn();
+
+      // Users can only create/update their own profile
+      allow create: if isOwner(userId);
+
+      // Users can update their own profile (points, stock value)
+      allow update: if isOwner(userId) &&
+        // Prevent users from directly setting arbitrary point values
+        request.resource.data.email == resource.data.email;
+    }
+
+    // Wishes collection
+    match /wishes/{wishId} {
+      // All signed-in users can read wishes
+      allow read: if isSignedIn();
+
+      // Only admin can create wishes
+      allow create: if isSignedIn() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.keys().hasAny(['email']) &&
+        request.auth.token.email == 'REPLACE_WITH_ADMIN_EMAIL';
+
+      // Admin can update/delete any wish
+      // Friends can only update claimedBy/claimedByName/status (claim) and
+      // fulfilledBy/fulfilledByName/status (fulfill) on wishes they've claimed
+      allow update: if isSignedIn() && (
+        // Admin can do anything
+        request.auth.token.email == 'REPLACE_WITH_ADMIN_EMAIL' ||
+        // Friend can claim an open wish
+        (
+          resource.data.status == 'open' &&
+          request.resource.data.status == 'claimed' &&
+          request.resource.data.claimedBy == request.auth.uid
+        ) ||
+        // Friend can fulfill a wish they claimed
+        (
+          resource.data.status == 'claimed' &&
+          resource.data.claimedBy == request.auth.uid &&
+          request.resource.data.status == 'fulfilled' &&
+          request.resource.data.fulfilledBy == request.auth.uid
+        )
+      );
+
+      allow delete: if isSignedIn() &&
+        request.auth.token.email == 'REPLACE_WITH_ADMIN_EMAIL';
+    }
+
+    // Activities collection
+    match /activities/{activityId} {
+      // All signed-in users can read activities
+      allow read: if isSignedIn();
+
+      // Any signed-in user can create activities (logging)
+      allow create: if isSignedIn() &&
+        request.resource.data.userId == request.auth.uid;
+    }
+  }
+}
