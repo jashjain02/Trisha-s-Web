@@ -1,8 +1,6 @@
 import { useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, CheckCircle, ImageIcon } from 'lucide-react'
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
-import { storage } from '../../lib/firebase'
 import { Modal } from '../ui/Modal'
 import { Button } from '../ui/Button'
 import { Avatar } from '../ui/Avatar'
@@ -64,24 +62,15 @@ export function FulfillmentModal({ wish, onClose, onConfirm }: FulfillmentModalP
     setUploading(true)
     setError('')
     try {
-      const storageRef = ref(storage, `fulfillments/${wish.id}_${Date.now()}`)
-      const task = uploadBytesResumable(storageRef, file)
-
-      const photoURL = await new Promise<string>((resolve, reject) => {
-        task.on(
-          'state_changed',
-          (snap) => setProgress((snap.bytesTransferred / snap.totalBytes) * 100),
-          reject,
-          async () => resolve(await getDownloadURL(task.snapshot.ref))
-        )
-      })
-
+      const photoURL = await uploadToImgBB(file, setProgress)
       await onConfirm(wish, photoURL)
       setPreview(null)
       setFile(null)
       setProgress(0)
-    } catch {
-      setError('Upload failed. Please try again.')
+    } catch (err) {
+      const uploadErr = err as { message?: string }
+      console.error('Upload error:', uploadErr?.message, err)
+      setError(`Upload failed: ${uploadErr?.message || 'unknown error'}`)
     } finally {
       setUploading(false)
     }
@@ -201,4 +190,37 @@ export function FulfillmentModal({ wish, onClose, onConfirm }: FulfillmentModalP
       </div>
     </Modal>
   )
+}
+
+function uploadToImgBB(file: File, onProgress: (percent: number) => void): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const apiKey = (import.meta.env.VITE_IMGBB_API_KEY ?? '').trim()
+    if (!apiKey) {
+      reject(new Error('Image hosting is not configured (missing VITE_IMGBB_API_KEY)'))
+      return
+    }
+
+    const formData = new FormData()
+    formData.append('image', file)
+
+    const xhr = new XMLHttpRequest()
+    xhr.open('POST', `https://api.imgbb.com/1/upload?key=${apiKey}`)
+    xhr.upload.onprogress = (e) => {
+      if (e.lengthComputable) onProgress((e.loaded / e.total) * 100)
+    }
+    xhr.onload = () => {
+      try {
+        const res = JSON.parse(xhr.responseText)
+        if (xhr.status >= 200 && xhr.status < 300 && res?.data?.url) {
+          resolve(res.data.url as string)
+        } else {
+          reject(new Error(res?.error?.message || `Image host returned HTTP ${xhr.status}`))
+        }
+      } catch {
+        reject(new Error('Invalid response from image host'))
+      }
+    }
+    xhr.onerror = () => reject(new Error('Network error while uploading image'))
+    xhr.send(formData)
+  })
 }
