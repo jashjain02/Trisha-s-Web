@@ -1,5 +1,14 @@
+function normalizePhone(phone: string): string {
+  let cleaned = phone.replace(/[^0-9+]/g, '')
+  if (cleaned.startsWith('+')) return cleaned
+  cleaned = cleaned.replace(/^0+/, '')
+  // Bare 10-digit mobile number — assume India and add country code
+  if (cleaned.length === 10) return `+91${cleaned}`
+  return `+${cleaned}`
+}
+
 export function openWhatsApp(phone: string, message: string) {
-  const cleaned = phone.replace(/[^0-9+]/g, '')
+  const cleaned = normalizePhone(phone)
   const encoded = encodeURIComponent(message)
   // On mobile opens WhatsApp app; on desktop opens WhatsApp Web
   window.open(`https://wa.me/${cleaned}?text=${encoded}`, '_blank')
