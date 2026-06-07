@@ -6,6 +6,7 @@ import { Sparkles } from 'lucide-react'
 interface LandingPageProps {
   onEnter: () => void
   loading: boolean
+  error?: string | null
 }
 
 function FloatingElement({
@@ -44,7 +45,7 @@ function FloatingElement({
   )
 }
 
-export function LandingPage({ onEnter, loading }: LandingPageProps) {
+export function LandingPage({ onEnter, loading, error }: LandingPageProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({ container: containerRef })
   const heroY = useTransform(scrollYProgress, [0, 1], [0, -80])
@@ -167,6 +168,9 @@ export function LandingPage({ onEnter, loading }: LandingPageProps) {
           >
             Enter The Exchange
           </Button>
+          {error && (
+            <p className="mt-3 text-xs font-medium text-red-500 max-w-sm mx-auto">{error}</p>
+          )}
         </motion.div>
 
         {/* Social proof */}

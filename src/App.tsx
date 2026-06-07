@@ -54,6 +54,7 @@ export default function App() {
     isPending,
     isNewUser,
     loading,
+    error,
     signInWithGoogle,
     submitJoinRequest,
     signOut,
@@ -69,7 +70,7 @@ export default function App() {
 
   // Not signed in
   if (!firebaseUser) {
-    return <LandingPage onEnter={signInWithGoogle} loading={loading} />
+    return <LandingPage onEnter={signInWithGoogle} loading={loading} error={error} />
   }
 
   // Signed in but hasn't submitted whatsapp yet
