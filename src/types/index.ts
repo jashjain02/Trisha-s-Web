@@ -10,7 +10,6 @@ export interface User {
   whatsapp: string
   status: UserStatus
   points: number
-  stockValue: number
   joinedAt: Timestamp
 }
 
@@ -71,16 +70,4 @@ export interface Activity {
   wishTitle: string | null
   points: number | null
   timestamp: Timestamp
-}
-
-export type MarketSentiment = 'bullish' | 'neutral' | 'bearish'
-
-export interface MarketStats {
-  totalWishes: number
-  fulfilledWishes: number
-  openWishes: number
-  claimedWishes: number
-  marketCap: number
-  sentiment: MarketSentiment
-  topFriend: User | null
 }

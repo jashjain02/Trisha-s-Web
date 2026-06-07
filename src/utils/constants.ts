@@ -7,7 +7,6 @@ export const POINTS = {
   BIRTHDAY_GIFT: 50,
 } as const
 
-export const INITIAL_STOCK_VALUE = 100
 export const INITIAL_POINTS = 100
 
 export const CATEGORIES = [
@@ -29,30 +28,3 @@ export const CATEGORY_EMOJI: Record<string, string> = {
   'Emotional Support': '🥹',
   Custom: '✨',
 }
-
-export const SENTIMENT_CONFIG = {
-  bullish: {
-    label: 'Bullish',
-    emoji: '📈',
-    color: 'text-green-600',
-    bg: 'from-green-50 to-emerald-50',
-    border: 'border-green-200',
-    description: 'Friends are delivering! The market is thriving.',
-  },
-  neutral: {
-    label: 'Neutral',
-    emoji: '😐',
-    color: 'text-amber-600',
-    bg: 'from-amber-50 to-yellow-50',
-    border: 'border-amber-200',
-    description: 'Things are steady. Time to make some moves.',
-  },
-  bearish: {
-    label: 'Bearish',
-    emoji: '📉',
-    color: 'text-rose-600',
-    bg: 'from-rose-50 to-pink-50',
-    border: 'border-rose-200',
-    description: 'Wishes are piling up. Friends, step up!',
-  },
-} as const

@@ -73,9 +73,8 @@ export function LeaderboardCard({ user, rank, isCurrentUser, delay = 0 }: Leader
           </div>
 
           <div className="flex-shrink-0 text-right">
-            <p className="text-sm font-bold text-gray-900">₹{user.stockValue}</p>
-            <div className="flex items-center gap-1 justify-end text-xs text-gray-500">
-              <TrendingUp size={10} className="text-emerald-500" />
+            <div className="flex items-center gap-1 justify-end text-sm font-bold text-gray-900">
+              <TrendingUp size={12} className="text-emerald-500" />
               {user.points} pts
             </div>
           </div>

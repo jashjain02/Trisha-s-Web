@@ -22,11 +22,9 @@ import { PendingPage } from './pages/PendingPage'
 import { DashboardPage } from './pages/DashboardPage'
 import { WishesPage } from './pages/WishesPage'
 import { LeaderboardPage } from './pages/LeaderboardPage'
-import { FeedPage } from './pages/FeedPage'
-import { MarketPage } from './pages/MarketPage'
 import { AdminPage } from './pages/AdminPage'
 import { POINTS } from './utils/constants'
-import { calcStockValue, isSameDay } from './utils/helpers'
+import { isSameDay } from './utils/helpers'
 import type { Wish, WishApplicant, WishCategory } from './types'
 
 function LoadingScreen() {
@@ -196,7 +194,6 @@ export default function App() {
     const newPoints = (friendData.points ?? 0) + bonusPoints
     await updateDoc(friendRef, {
       points: newPoints,
-      stockValue: calcStockValue(newPoints),
       lastFulfillDate: serverTimestamp(),
     })
 
@@ -284,8 +281,6 @@ export default function App() {
             path="/leaderboard"
             element={<LeaderboardPage users={approvedUsers} currentUser={currentUserData} />}
           />
-          <Route path="/feed" element={<FeedPage activities={activities} loading={false} />} />
-          <Route path="/market" element={<MarketPage users={approvedUsers} wishes={wishes} />} />
           {isAdmin && (
             <Route
               path="/admin"

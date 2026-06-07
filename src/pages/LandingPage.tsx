@@ -125,8 +125,8 @@ export function LandingPage({ onEnter, loading, error }: LandingPageProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
         >
-          The only stock market where{' '}
-          <span className="font-semibold text-pink-dark">friendship</span> is the currency.
+          Make a wish, fulfill a wish,{' '}
+          <span className="font-semibold text-pink-dark">earn friendship points</span>.
         </motion.p>
 
         {/* Feature pills */}
@@ -139,7 +139,7 @@ export function LandingPage({ onEnter, loading, error }: LandingPageProps) {
           {[
             '🎯 Post Wishes',
             '⚡ Claim & Fulfill',
-            '📈 Earn Stock Value',
+            '⭐ Earn Points',
             '🏆 Top the Leaderboard',
           ].map((pill) => (
             <span
@@ -206,7 +206,7 @@ export function LandingPage({ onEnter, loading, error }: LandingPageProps) {
         {[
           { emoji: '💖', title: 'Post Wishes', desc: 'Trisha posts anything she wants' },
           { emoji: '⭐', title: 'Earn Points', desc: 'Friends compete to fulfill them' },
-          { emoji: '📈', title: 'Stock Market', desc: 'Your friendship has real value' },
+          { emoji: '🏆', title: 'Leaderboard', desc: 'See who\'s topping the charts' },
         ].map((card) => (
           <div
             key={card.title}

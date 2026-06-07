@@ -4,10 +4,8 @@ import {
   LayoutDashboard,
   Heart,
   Trophy,
-  Activity,
   Settings,
   LogOut,
-  TrendingUp,
 } from 'lucide-react'
 import { Avatar } from '../ui/Avatar'
 import { Button } from '../ui/Button'
@@ -23,8 +21,6 @@ const NAV_LINKS = [
   { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
   { to: '/wishes', icon: Heart, label: 'Wishes' },
   { to: '/leaderboard', icon: Trophy, label: 'Leaderboard' },
-  { to: '/feed', icon: Activity, label: 'Feed' },
-  { to: '/market', icon: TrendingUp, label: 'Market' },
 ]
 
 export function Navbar({ user, isAdmin, onSignOut }: NavbarProps) {
@@ -90,9 +86,7 @@ export function Navbar({ user, isAdmin, onSignOut }: NavbarProps) {
 
           <div className="flex items-center gap-2">
             <div className="hidden sm:flex items-center gap-2 px-3 py-1 bg-pink-soft rounded-xl border border-pink-200">
-              <span className="text-xs font-bold text-pink-dark">₹{user.stockValue}</span>
-              <span className="text-xs text-gray-500">·</span>
-              <span className="text-xs text-gray-600">{user.points}pts</span>
+              <span className="text-xs font-bold text-pink-dark">⭐ {user.points} pts</span>
             </div>
             <Avatar src={user.photoURL} name={user.name} size="sm" />
             <Button

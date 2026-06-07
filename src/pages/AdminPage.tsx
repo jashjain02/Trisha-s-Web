@@ -9,7 +9,6 @@ import { WishForm } from '../components/wishes/WishForm'
 import { ApplicantPicker } from '../components/wishes/ApplicantPicker'
 import { ActivityFeed } from '../components/activity/ActivityFeed'
 import { Avatar } from '../components/ui/Avatar'
-import { calcMarketStats } from '../utils/helpers'
 import type { User, Wish, Activity as ActivityType, WishApplicant, WishCategory } from '../types'
 
 interface AdminPageProps {
@@ -56,7 +55,11 @@ export function AdminPage({
   const [pickerWish, setPickerWish] = useState<Wish | null>(null)
   const [deleteLoading, setDeleteLoading] = useState(false)
 
-  const stats = useMemo(() => calcMarketStats(wishes, users), [wishes, users])
+  const stats = useMemo(() => ({
+    totalWishes: wishes.length,
+    openWishes: wishes.filter((w) => w.status === 'open').length,
+    fulfilledWishes: wishes.filter((w) => w.status === 'fulfilled').length,
+  }), [wishes])
   const pendingReview = wishes.filter((w) => w.status === 'pending_review')
 
   const TABS: { id: AdminTab; label: string; icon: React.ReactNode; badge?: number }[] = [
@@ -269,15 +272,9 @@ export function AdminPage({
                   <p className="font-semibold text-gray-900">{user.name}</p>
                   <p className="text-xs text-gray-500 truncate">{user.email}</p>
                 </div>
-                <div className="flex gap-3 text-right">
-                  <div>
-                    <p className="text-xs text-gray-400">Points</p>
-                    <p className="text-sm font-bold text-gray-800">{user.points}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-400">Stock</p>
-                    <p className="text-sm font-bold text-pink-dark">₹{user.stockValue}</p>
-                  </div>
+                <div className="text-right">
+                  <p className="text-xs text-gray-400">Points</p>
+                  <p className="text-sm font-bold text-pink-dark">{user.points}</p>
                 </div>
               </GlassCard>
             </motion.div>

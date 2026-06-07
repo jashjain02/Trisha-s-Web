@@ -8,7 +8,7 @@ import {
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore'
 import { auth, db, googleProvider } from '../lib/firebase'
 import type { User } from '../types'
-import { ADMIN_EMAIL, INITIAL_POINTS, INITIAL_STOCK_VALUE } from '../utils/constants'
+import { ADMIN_EMAIL, INITIAL_POINTS } from '../utils/constants'
 
 interface AuthState {
   user: User | null
@@ -79,7 +79,6 @@ export function useAuth() {
               whatsapp: '',
               status: 'approved',
               points: INITIAL_POINTS,
-              stockValue: INITIAL_STOCK_VALUE,
               joinedAt: serverTimestamp() as any,
             }
             await setDoc(userRef, newUser)
@@ -106,12 +105,13 @@ export function useAuth() {
     setState((prev) => ({ ...prev, loading: true, error: null }))
     try {
       await signInWithPopup(auth, googleProvider)
-    } catch (err: any) {
-      console.error('Sign-in error:', err?.code, err?.message, err)
+    } catch (err) {
+      const fbErr = err as { code?: string; message?: string }
+      console.error('Sign-in error:', fbErr?.code, fbErr?.message, err)
       setState((prev) => ({
         ...prev,
         loading: false,
-        error: `Sign in failed: ${err?.code || err?.message || 'unknown error'}`,
+        error: `Sign in failed: ${fbErr?.code || fbErr?.message || 'unknown error'}`,
       }))
     }
   }
@@ -128,7 +128,6 @@ export function useAuth() {
       whatsapp,
       status: 'pending',
       points: INITIAL_POINTS,
-      stockValue: INITIAL_STOCK_VALUE,
       joinedAt: serverTimestamp() as any,
     }
     await setDoc(userRef, newUser)

@@ -7,9 +7,7 @@ import { StatCard } from '../components/ui/StatCard'
 import { Avatar } from '../components/ui/Avatar'
 import { WishCard } from '../components/wishes/WishCard'
 import { ApplicantPicker } from '../components/wishes/ApplicantPicker'
-import { MarketSentimentCard } from '../components/market/MarketSentimentCard'
 import { ADMIN_EMAIL } from '../utils/constants'
-import { calcMarketStats } from '../utils/helpers'
 import type { Wish, WishApplicant, User } from '../types'
 
 interface DashboardPageProps {
@@ -37,7 +35,15 @@ export function DashboardPage({
 }: DashboardPageProps) {
   const [pickerWish, setPickerWish] = useState<Wish | null>(null)
 
-  const stats = useMemo(() => calcMarketStats(wishes, users), [wishes, users])
+  const stats = useMemo(() => {
+    const totalWishes = wishes.length
+    const fulfilledWishes = wishes.filter((w) => w.status === 'fulfilled').length
+    const openWishes = wishes.filter((w) => w.status === 'open').length
+    const claimedWishes = wishes.filter((w) => w.status === 'claimed' || w.status === 'pending_review').length
+    const topFriend =
+      users.length > 0 ? users.reduce((best, u) => (u.points > best.points ? u : best), users[0]) : null
+    return { totalWishes, fulfilledWishes, openWishes, claimedWishes, topFriend }
+  }, [wishes, users])
   const isTrisha = currentUser.email === ADMIN_EMAIL
   const greeting = isTrisha ? `Hi Trisha 💖` : `Welcome back, ${currentUser.name.split(' ')[0]} ✨`
 
@@ -97,12 +103,8 @@ export function DashboardPage({
           </div>
           <div className="flex gap-3">
             <div className="text-center px-4 py-2 bg-white/60 rounded-xl border border-pink-100">
-              <p className="text-xs text-gray-500">Your Stock</p>
-              <p className="text-xl font-black text-pink-dark">₹{currentUser.stockValue}</p>
-            </div>
-            <div className="text-center px-4 py-2 bg-white/60 rounded-xl border border-pink-100">
               <p className="text-xs text-gray-500">Points</p>
-              <p className="text-xl font-black text-gray-900">{currentUser.points}</p>
+              <p className="text-xl font-black text-pink-dark">{currentUser.points}</p>
             </div>
             {!isTrisha && myRank > 0 && (
               <div className="text-center px-4 py-2 bg-white/60 rounded-xl border border-pink-100">
@@ -140,7 +142,7 @@ export function DashboardPage({
 
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <StatCard label="Market Cap" value={`₹${stats.marketCap}`} icon={<TrendingUp />} color="from-pink-100 to-pink-soft" delay={0.05} />
+        <StatCard label="Total Points" value={users.reduce((s, u) => s + u.points, 0)} icon={<TrendingUp />} color="from-pink-100 to-pink-soft" delay={0.05} />
         <StatCard label="Total Wishes" value={stats.totalWishes} icon={<Heart />} color="from-rose-100 to-pink-100" delay={0.1} />
         <StatCard label="Fulfilled" value={stats.fulfilledWishes} icon={<span>✅</span>} color="from-emerald-100 to-green-50" delay={0.15} />
         <StatCard label="Top Friend" value={stats.topFriend?.name.split(' ')[0] ?? '—'} icon={<Trophy />} color="from-amber-100 to-yellow-50" delay={0.2} />
@@ -175,12 +177,27 @@ export function DashboardPage({
         </div>
 
         <div className="space-y-4">
-          <h2 className="text-base font-bold text-gray-900">Market Sentiment</h2>
-          <MarketSentimentCard
-            sentiment={stats.sentiment}
-            fulfilledCount={stats.fulfilledWishes}
-            totalCount={stats.totalWishes}
-          />
+          <div>
+            <h2 className="text-base font-bold text-gray-900 mb-3">Wishes Progress</h2>
+            <GlassCard>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm text-gray-600">Fulfilled</span>
+                <span className="text-sm font-bold text-pink-dark">
+                  {stats.fulfilledWishes}/{stats.totalWishes}
+                </span>
+              </div>
+              <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                <motion.div
+                  className="h-full rounded-full bg-gradient-to-r from-pink-400 to-lavender"
+                  initial={{ width: 0 }}
+                  animate={{
+                    width: `${stats.totalWishes > 0 ? (stats.fulfilledWishes / stats.totalWishes) * 100 : 0}%`,
+                  }}
+                  transition={{ duration: 0.8, ease: 'easeOut' }}
+                />
+              </div>
+            </GlassCard>
+          </div>
 
           <div>
             <div className="flex items-center justify-between mb-3">
@@ -203,7 +220,7 @@ export function DashboardPage({
                   <div className="flex-1 min-w-0">
                     <p className="text-xs font-semibold text-gray-800 truncate">{u.name}</p>
                   </div>
-                  <p className="text-xs font-bold text-pink-dark">₹{u.stockValue}</p>
+                  <p className="text-xs font-bold text-pink-dark">{u.points} pts</p>
                 </motion.div>
               ))}
             </GlassCard>

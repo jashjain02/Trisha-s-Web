@@ -1,44 +1,4 @@
 import type { Timestamp } from 'firebase/firestore'
-import type { MarketSentiment, MarketStats, Wish, User } from '../types'
-import { INITIAL_STOCK_VALUE } from './constants'
-
-export function calcStockValue(points: number): number {
-  return INITIAL_STOCK_VALUE + points
-}
-
-export function calcMarketSentiment(
-  totalWishes: number,
-  fulfilledWishes: number
-): MarketSentiment {
-  if (totalWishes === 0) return 'neutral'
-  const ratio = fulfilledWishes / totalWishes
-  if (ratio >= 0.6) return 'bullish'
-  if (ratio >= 0.3) return 'neutral'
-  return 'bearish'
-}
-
-export function calcMarketStats(wishes: Wish[], users: User[]): MarketStats {
-  const total = wishes.length
-  const fulfilled = wishes.filter((w) => w.status === 'fulfilled').length
-  const open = wishes.filter((w) => w.status === 'open').length
-  const claimed = wishes.filter((w) => w.status === 'claimed' || w.status === 'pending_review').length
-  const marketCap = users.reduce((sum, u) => sum + u.stockValue, 0)
-  const sentiment = calcMarketSentiment(total, fulfilled)
-  const topFriend =
-    users.length > 0
-      ? users.reduce((best, u) => (u.points > best.points ? u : best), users[0])
-      : null
-
-  return {
-    totalWishes: total,
-    fulfilledWishes: fulfilled,
-    openWishes: open,
-    claimedWishes: claimed,
-    marketCap,
-    sentiment,
-    topFriend,
-  }
-}
 
 export function formatTimestamp(ts: Timestamp | undefined): string {
   if (!ts) return ''

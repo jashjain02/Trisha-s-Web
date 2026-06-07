@@ -67,7 +67,7 @@ export function LeaderboardPage({ users, currentUser }: LeaderboardPageProps) {
                   <p className="mt-2 text-sm font-semibold text-gray-700 max-w-[80px] text-center truncate">
                     {top3[1].name.split(' ')[0]}
                   </p>
-                  <p className="text-xs text-gray-500">₹{top3[1].stockValue}</p>
+                  <p className="text-xs text-gray-500">{top3[1].points} pts</p>
                   <div className="mt-2 h-16 w-20 bg-gradient-to-t from-gray-200 to-gray-100 rounded-t-xl flex items-end justify-center pb-2">
                     <span className="text-2xl">🥈</span>
                   </div>
@@ -91,7 +91,7 @@ export function LeaderboardPage({ users, currentUser }: LeaderboardPageProps) {
                   <p className="mt-2 text-sm font-bold text-gray-900 max-w-[90px] text-center truncate">
                     {top3[0].name.split(' ')[0]}
                   </p>
-                  <p className="text-xs text-pink-dark font-semibold">₹{top3[0].stockValue}</p>
+                  <p className="text-xs text-pink-dark font-semibold">{top3[0].points} pts</p>
                   <div className="mt-2 h-24 w-24 bg-gradient-to-t from-amber-300 to-yellow-200 rounded-t-xl flex items-end justify-center pb-2 shadow-md">
                     <span className="text-2xl">🥇</span>
                   </div>
@@ -110,7 +110,7 @@ export function LeaderboardPage({ users, currentUser }: LeaderboardPageProps) {
                   <p className="mt-2 text-sm font-semibold text-gray-700 max-w-[80px] text-center truncate">
                     {top3[2].name.split(' ')[0]}
                   </p>
-                  <p className="text-xs text-gray-500">₹{top3[2].stockValue}</p>
+                  <p className="text-xs text-gray-500">{top3[2].points} pts</p>
                   <div className="mt-2 h-12 w-20 bg-gradient-to-t from-orange-200 to-amber-100 rounded-t-xl flex items-end justify-center pb-2">
                     <span className="text-2xl">🥉</span>
                   </div>
@@ -142,16 +142,16 @@ export function LeaderboardPage({ users, currentUser }: LeaderboardPageProps) {
         )}
       </div>
 
-      {/* Market Cap */}
+      {/* Total points */}
       <GlassCard className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-pink-baby/30 to-lavender-soft/20 rounded-2xl" />
         <div className="relative flex items-center justify-between">
           <div>
-            <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Total Friendship Market Cap</p>
+            <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Total Friendship Points</p>
             <p className="text-3xl font-black text-gray-900 mt-1">
-              ₹{users.reduce((s, u) => s + u.stockValue, 0)}
+              {users.reduce((s, u) => s + u.points, 0)} pts
             </p>
-            <p className="text-xs text-gray-500 mt-1">{users.length} friends in the market</p>
+            <p className="text-xs text-gray-500 mt-1">{users.length} friends earning points</p>
           </div>
           <Trophy size={40} className="text-amber-400 opacity-60" />
         </div>
