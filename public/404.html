@@ -2,20 +2,16 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Trisha Exchange™</title>
+    <title>Trisha's Exchange™</title>
     <script>
-      // GitHub Pages SPA redirect
+      // GitHub Pages SPA redirect (root deployment — pathSegmentsToKeep = 0)
       var l = window.location
       l.replace(
-        l.protocol +
-          '//' +
-          l.hostname +
-          (l.port ? ':' + l.port : '') +
-          l.pathname.split('/').slice(0, 2).join('/') +
-          '/?p=/' +
-          l.pathname.slice(1).split('/').slice(1).join('/').replace(/&/g, '~and~') +
-          (l.search ? '&q=' + l.search.slice(1).replace(/&/g, '~and~') : '') +
-          l.hash
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        l.pathname.split('/').slice(0, 1).join('/') + '/?/' +
+        l.pathname.slice(1).replace(/&/g, '~and~') +
+        (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+        l.hash
       )
     </script>
   </head>
