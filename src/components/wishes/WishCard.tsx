@@ -1,9 +1,11 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Clock, User, CheckCircle, Trash2, Edit2, Send } from 'lucide-react'
 import { GlassCard } from '../ui/GlassCard'
 import { Badge } from '../ui/Badge'
 import { Button } from '../ui/Button'
 import { Avatar } from '../ui/Avatar'
+import { ImageLightbox } from '../ui/ImageLightbox'
 import { formatTimestamp } from '../../utils/helpers'
 import { CATEGORY_EMOJI } from '../../utils/constants'
 import { shareWishToWhatsApp } from '../../utils/whatsapp'
@@ -36,6 +38,7 @@ export function WishCard({
   featured = false,
   index = 0,
 }: WishCardProps) {
+  const [lightboxOpen, setLightboxOpen] = useState(false)
   const emoji = CATEGORY_EMOJI[wish.category] ?? '✨'
   const applicants = wish.applicants ?? []
   const hasApplied = applicants.some((a) => a.userId === currentUser.id)
@@ -198,36 +201,48 @@ export function WishCard({
 
         {wish.status === 'fulfilled' && (
           <motion.div
-            className="absolute top-3 right-10 text-xl"
-            initial={{ scale: 0 }}
-            animate={{ scale: 1, rotate: [0, -10, 10, 0] }}
-            transition={{ delay: 0.2 }}
+            className="absolute top-5 -right-10 rotate-45"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.2, type: 'spring', stiffness: 300, damping: 22 }}
           >
-            ✅
+            <div className="border-y-2 border-pink-400/70 px-10 py-0.5">
+              <span className="text-[10px] font-extrabold tracking-[0.25em] text-pink-500 uppercase whitespace-nowrap">
+                Finished
+              </span>
+            </div>
           </motion.div>
         )}
 
         {/* Fulfillment proof photo */}
         {wish.fulfillmentPhotoURL && (
           <motion.div
-            className="mt-4 rounded-xl overflow-hidden border border-pink-100"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
+            className="mt-4 flex items-center gap-2.5"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
           >
-            <div className="px-2 pt-2 pb-1 bg-pink-soft flex items-center gap-1.5">
-              <span className="text-xs">📸</span>
-              <span className="text-xs font-medium text-pink-dark">Proof of fulfillment</span>
-            </div>
-            <img
-              src={wish.fulfillmentPhotoURL}
-              alt="Fulfillment proof"
-              className="w-full max-h-64 object-cover cursor-pointer"
-              onClick={() => window.open(wish.fulfillmentPhotoURL, '_blank')}
-            />
+            <button
+              onClick={() => setLightboxOpen(true)}
+              className="shrink-0 rounded-full ring-2 ring-pink-200 hover:ring-pink-400 transition-all hover:scale-105"
+              aria-label="View proof of fulfillment"
+            >
+              <img
+                src={wish.fulfillmentPhotoURL}
+                alt="Fulfillment proof"
+                className="w-11 h-11 rounded-full object-cover cursor-pointer"
+              />
+            </button>
+            <span className="text-xs font-medium text-pink-dark">📸 Proof of fulfillment</span>
           </motion.div>
         )}
       </GlassCard>
+
+      <ImageLightbox
+        src={lightboxOpen ? (wish.fulfillmentPhotoURL ?? null) : null}
+        alt="Fulfillment proof"
+        onClose={() => setLightboxOpen(false)}
+      />
     </motion.div>
   )
 }
