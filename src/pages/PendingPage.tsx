@@ -11,10 +11,10 @@ interface PendingPageProps {
 export function PendingPage({ user, onSignOut }: PendingPageProps) {
   return (
     <div
-      className="min-h-screen flex items-center justify-center p-4"
+      className="min-h-screen flex items-center justify-center p-4 bg-obsidian"
       style={{
         background:
-          'radial-gradient(at 30% 20%, #FFD6E7 0px, transparent 50%), radial-gradient(at 70% 10%, #F2E7FF 0px, transparent 50%), radial-gradient(at 10% 70%, #D9F2FF 0px, transparent 50%), #FAFAFA',
+          'radial-gradient(ellipse at 50% 0%, rgba(255,46,147,0.10) 0px, transparent 55%), radial-gradient(ellipse at 80% 80%, rgba(168,85,247,0.06) 0px, transparent 50%), #0A0A0C',
       }}
     >
       {/* Floating elements */}
@@ -38,7 +38,7 @@ export function PendingPage({ user, onSignOut }: PendingPageProps) {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="bg-white/80 backdrop-blur-xl rounded-3xl border border-white/60 shadow-glass-lg p-8 text-center space-y-6">
+        <div className="bg-[#111115]/95 backdrop-blur-2xl rounded-3xl border border-white/[0.10] shadow-glass-lg p-8 text-center space-y-6">
           <motion.div
             animate={{ scale: [1, 1.1, 1], rotate: [0, 5, -5, 0] }}
             transition={{ repeat: Infinity, duration: 3 }}
@@ -48,25 +48,25 @@ export function PendingPage({ user, onSignOut }: PendingPageProps) {
           </motion.div>
 
           <div className="space-y-2">
-            <h1 className="text-2xl font-black text-gray-900">Request Sent! 🌸</h1>
-            <p className="text-gray-500 text-sm leading-relaxed">
+            <h1 className="text-2xl font-black text-white">Request Sent! 🌸</h1>
+            <p className="text-slate-400 text-sm leading-relaxed">
               Your join request is with Trisha. She'll approve you once she's ready.
               <br />
-              <span className="text-pink-dark font-medium">Sit tight — good things take time 💖</span>
+              <span className="text-[#FF2E93] font-medium">Sit tight — good things take time 💖</span>
             </p>
           </div>
 
-          <div className="p-4 bg-pink-soft rounded-2xl border border-pink-100 space-y-3">
+          <div className="p-4 bg-[#FF2E93]/[0.06] rounded-2xl border border-[#FF2E93]/20 space-y-3">
             <div className="flex items-center gap-3 justify-center">
               <Avatar src={user.photoURL} name={user.name} size="md" />
               <div className="text-left">
-                <p className="text-sm font-semibold text-gray-900">{user.name}</p>
-                <p className="text-xs text-gray-500">{user.email}</p>
+                <p className="text-sm font-semibold text-white">{user.name}</p>
+                <p className="text-xs text-slate-400">{user.email}</p>
               </div>
             </div>
             {user.whatsapp && (
-              <p className="text-xs text-gray-500 text-center">
-                📱 WhatsApp: <span className="font-medium text-gray-700">{user.whatsapp}</span>
+              <p className="text-xs text-slate-400 text-center">
+                📱 WhatsApp: <span className="font-medium text-white">{user.whatsapp}</span>
               </p>
             )}
             <div className="flex items-center justify-center gap-2">
@@ -77,7 +77,7 @@ export function PendingPage({ user, onSignOut }: PendingPageProps) {
 
           <button
             onClick={onSignOut}
-            className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-gray-600 transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-300 transition-colors"
           >
             <LogOut size={12} />
             Sign out

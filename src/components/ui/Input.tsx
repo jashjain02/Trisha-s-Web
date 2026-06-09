@@ -11,12 +11,12 @@ interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
 }
 
 const baseClass = `
-  w-full px-4 py-2.5 rounded-xl border text-sm text-gray-900
-  bg-white/80 backdrop-blur-sm
-  border-gray-200 placeholder:text-gray-400
-  focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-300
+  w-full px-4 py-2.5 rounded-xl border text-sm text-white
+  bg-white/[0.04] backdrop-blur-sm
+  border-white/[0.10] placeholder:text-slate-600
+  focus:outline-none focus:ring-2 focus:ring-[#FF2E93]/30 focus:border-[#FF2E93]/50
   transition-all duration-200
-  disabled:opacity-50 disabled:cursor-not-allowed
+  disabled:opacity-40 disabled:cursor-not-allowed
 `
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
@@ -26,10 +26,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   return (
     <div className="space-y-1">
       {label && (
-        <label className="block text-sm font-medium text-gray-700">{label}</label>
+        <label className="block text-sm font-medium text-slate-300">{label}</label>
       )}
-      <input ref={ref} className={`${baseClass} ${error ? 'border-red-300 focus:ring-red-300' : ''} ${className}`} {...props} />
-      {error && <p className="text-xs text-red-500">{error}</p>}
+      <input ref={ref} className={`${baseClass} ${error ? 'border-rose-500/50 focus:ring-rose-500/30' : ''} ${className}`} {...props} />
+      {error && <p className="text-xs text-rose-400">{error}</p>}
     </div>
   )
 })
@@ -41,15 +41,15 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
   return (
     <div className="space-y-1">
       {label && (
-        <label className="block text-sm font-medium text-gray-700">{label}</label>
+        <label className="block text-sm font-medium text-slate-300">{label}</label>
       )}
       <textarea
         ref={ref}
         rows={3}
-        className={`${baseClass} resize-none ${error ? 'border-red-300 focus:ring-red-300' : ''} ${className}`}
+        className={`${baseClass} resize-none ${error ? 'border-rose-500/50 focus:ring-rose-500/30' : ''} ${className}`}
         {...props}
       />
-      {error && <p className="text-xs text-red-500">{error}</p>}
+      {error && <p className="text-xs text-rose-400">{error}</p>}
     </div>
   )
 })
@@ -66,11 +66,12 @@ interface SelectProps {
 export function Select({ label, error, options, value, onChange, placeholder }: SelectProps) {
   return (
     <div className="space-y-1">
-      {label && <label className="block text-sm font-medium text-gray-700">{label}</label>}
+      {label && <label className="block text-sm font-medium text-slate-300">{label}</label>}
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className={`${baseClass} ${error ? 'border-red-300 focus:ring-red-300' : ''}`}
+        className={`${baseClass} ${error ? 'border-rose-500/50 focus:ring-rose-500/30' : ''}`}
+        style={{ colorScheme: 'dark' }}
       >
         {placeholder && <option value="" disabled>{placeholder}</option>}
         {options.map((o) => (
@@ -79,7 +80,7 @@ export function Select({ label, error, options, value, onChange, placeholder }: 
           </option>
         ))}
       </select>
-      {error && <p className="text-xs text-red-500">{error}</p>}
+      {error && <p className="text-xs text-rose-400">{error}</p>}
     </div>
   )
 }

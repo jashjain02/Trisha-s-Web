@@ -113,8 +113,8 @@ export function AdminPage({
             ⚙️
           </motion.div>
           <div>
-            <h1 className="text-2xl font-black text-gray-900">Admin Dashboard</h1>
-            <p className="text-sm text-gray-500">Trisha's control center ✨</p>
+            <h1 className="text-2xl font-black text-white">Admin Dashboard</h1>
+            <p className="text-sm text-slate-400">Trisha's control center ✨</p>
           </div>
         </div>
         <Button variant="primary" size="md" onClick={() => setCreateOpen(true)} icon={<Plus size={16} />}>
@@ -127,15 +127,15 @@ export function AdminPage({
         <motion.div
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="rounded-2xl border-2 border-amber-300 bg-amber-50/80 p-4"
+          className="rounded-2xl border border-amber-500/30 bg-amber-900/10 backdrop-blur-sm p-4"
         >
           <div className="flex items-center gap-3">
             <span className="text-2xl">🔔</span>
             <div>
-              <p className="font-bold text-amber-800 text-sm">
+              <p className="font-bold text-amber-300 text-sm">
                 {pendingReview.length} wish{pendingReview.length !== 1 ? 'es' : ''} need your confirmation
               </p>
-              <p className="text-xs text-amber-600 mt-0.5">Friends say they've done it — you decide if they get the points.</p>
+              <p className="text-xs text-amber-500/80 mt-0.5">Friends say they've done it — you decide if they get the points.</p>
             </div>
           </div>
           <div className="mt-3 space-y-2">
@@ -147,13 +147,13 @@ export function AdminPage({
       )}
 
       {/* Tabs */}
-      <div className="flex gap-1 p-1 bg-white/60 backdrop-blur-sm rounded-2xl border border-gray-100 w-fit">
+      <div className="flex gap-1 p-1 bg-white/[0.04] backdrop-blur-sm rounded-2xl border border-white/[0.08] w-fit">
         {TABS.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={`relative flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-medium transition-all ${
-              activeTab === tab.id ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500 hover:text-gray-700'
+              activeTab === tab.id ? 'bg-white/[0.10] shadow-sm text-white' : 'text-slate-500 hover:text-slate-200'
             }`}
           >
             {tab.icon}
@@ -179,14 +179,14 @@ export function AdminPage({
               <motion.div key={item.label} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.07 }}>
                 <GlassCard hover className="text-center py-5">
                   <p className="text-2xl">{item.emoji}</p>
-                  <p className="text-2xl font-black text-gray-900 mt-1">{item.value}</p>
-                  <p className="text-xs text-gray-500 mt-0.5">{item.label}</p>
+                  <p className="text-2xl font-black text-white mt-1">{item.value}</p>
+                  <p className="text-xs text-slate-500 mt-0.5">{item.label}</p>
                 </GlassCard>
               </motion.div>
             ))}
           </div>
           <GlassCard>
-            <h2 className="text-sm font-semibold text-gray-700 mb-4">Recent Wishes</h2>
+            <h2 className="text-sm font-semibold text-slate-300 mb-4">Recent Wishes</h2>
             <div className="space-y-3">
               {wishes.slice(0, 5).map((wish, i) => (
                 <WishCard key={wish.id} wish={wish} {...wishCardProps} index={i} />
@@ -201,7 +201,7 @@ export function AdminPage({
           {wishes.length === 0 ? (
             <GlassCard className="text-center py-16">
               <p className="text-4xl mb-3">🌸</p>
-              <p className="text-gray-500 mb-4">No wishes yet.</p>
+              <p className="text-slate-500 mb-4">No wishes yet.</p>
               <Button variant="primary" size="sm" onClick={() => setCreateOpen(true)} icon={<Plus size={14} />}>Create First Wish</Button>
             </GlassCard>
           ) : (
@@ -219,7 +219,7 @@ export function AdminPage({
           {pendingUsers.length === 0 ? (
             <GlassCard className="text-center py-16">
               <p className="text-4xl mb-3">🌸</p>
-              <p className="text-gray-500">No pending requests right now.</p>
+              <p className="text-slate-500">No pending requests right now.</p>
             </GlassCard>
           ) : (
             pendingUsers.map((user, i) => (
@@ -232,10 +232,10 @@ export function AdminPage({
                 <GlassCard className="flex items-center gap-4">
                   <Avatar src={user.photoURL} name={user.name} size="md" />
                   <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-gray-900">{user.name}</p>
-                    <p className="text-xs text-gray-500 truncate">{user.email}</p>
+                    <p className="font-semibold text-white">{user.name}</p>
+                    <p className="text-xs text-slate-400 truncate">{user.email}</p>
                     {user.whatsapp && (
-                      <p className="text-xs text-gray-400 mt-0.5">📱 {user.whatsapp}</p>
+                      <p className="text-xs text-slate-500 mt-0.5">📱 {user.whatsapp}</p>
                     )}
                   </div>
                   <div className="flex gap-2">
@@ -269,12 +269,12 @@ export function AdminPage({
               <GlassCard className="flex items-center gap-4">
                 <Avatar src={user.photoURL} name={user.name} size="md" />
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-gray-900">{user.name}</p>
-                  <p className="text-xs text-gray-500 truncate">{user.email}</p>
+                  <p className="font-semibold text-white">{user.name}</p>
+                  <p className="text-xs text-slate-400 truncate">{user.email}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-xs text-gray-400">Points</p>
-                  <p className="text-sm font-bold text-pink-dark">{user.points}</p>
+                  <p className="text-xs text-slate-500">Points</p>
+                  <p className="text-sm font-bold text-[#FF2E93]">{user.points}</p>
                 </div>
               </GlassCard>
             </motion.div>
@@ -304,8 +304,8 @@ export function AdminPage({
 
       <Modal open={!!deleteConfirm} onClose={() => setDeleteConfirm(null)} title="Delete Wish" size="sm">
         <div className="space-y-4">
-          <p className="text-sm text-gray-600">
-            Delete <span className="font-semibold">"{deleteConfirm?.title}"</span>? This cannot be undone.
+          <p className="text-sm text-slate-400">
+            Delete <span className="font-semibold text-white">"{deleteConfirm?.title}"</span>? This cannot be undone.
           </p>
           <div className="flex gap-3">
             <Button variant="ghost" fullWidth onClick={() => setDeleteConfirm(null)}>Cancel</Button>

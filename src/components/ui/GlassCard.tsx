@@ -26,14 +26,14 @@ export function GlassCard({
     <motion.div
       className={`
         relative rounded-2xl
-        bg-white/70 backdrop-blur-md
-        border border-white/60
+        bg-white/[0.03] backdrop-blur-2xl
+        border border-white/[0.08]
         shadow-card
         ${paddingMap[padding]}
         ${hover ? 'cursor-pointer' : ''}
         ${className}
       `}
-      whileHover={hover ? { scale: 1.02, boxShadow: '0 8px 40px rgba(255, 107, 157, 0.2)' } : undefined}
+      whileHover={hover ? { scale: 1.01, boxShadow: '0 8px 40px rgba(255,46,147,0.18), 0 0 0 1px rgba(255,46,147,0.12)' } : undefined}
       transition={{ type: 'spring', stiffness: 400, damping: 25 }}
       {...props}
     >

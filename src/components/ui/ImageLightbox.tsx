@@ -26,7 +26,7 @@ export function ImageLightbox({ src, alt = '', onClose }: ImageLightboxProps) {
     <AnimatePresence>
       {src && (
         <motion.div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-sm"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/90 backdrop-blur-md"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -44,7 +44,7 @@ export function ImageLightbox({ src, alt = '', onClose }: ImageLightboxProps) {
           />
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 w-9 h-9 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center backdrop-blur-md transition-colors"
+            className="absolute top-4 right-4 w-9 h-9 bg-white/[0.08] hover:bg-white/[0.15] text-white rounded-full flex items-center justify-center backdrop-blur-md border border-white/[0.12] transition-colors"
             aria-label="Close"
           >
             <X size={18} />

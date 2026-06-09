@@ -86,11 +86,11 @@ export function WishesPage({
     <div className="pt-4 pb-8 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-black text-gray-900">Wish Board 💖</h1>
-          <p className="text-sm text-gray-500 mt-0.5">
+          <h1 className="text-2xl font-black text-white">Wish Board 💖</h1>
+          <p className="text-sm text-slate-400 mt-0.5">
             {wishes.length} wishes · {wishes.filter((w) => w.status === 'open').length} open
             {pendingCount > 0 && isAdmin && (
-              <span className="ml-2 px-2 py-0.5 bg-amber-100 text-amber-700 text-xs font-semibold rounded-full">
+              <span className="ml-2 px-2 py-0.5 bg-amber-500/10 text-amber-400 text-xs font-semibold rounded-full">
                 {pendingCount} pending review
               </span>
             )}
@@ -105,7 +105,7 @@ export function WishesPage({
 
       {/* Filters */}
       <div className="flex items-center gap-2 flex-wrap" role="group" aria-label="Filter wishes">
-        <span className="flex items-center gap-1 text-xs text-gray-500"><Filter size={12} /> Filter:</span>
+        <span className="flex items-center gap-1 text-xs text-slate-500"><Filter size={12} /> Filter:</span>
         {STATUS_FILTERS.map(({ label, value }) => {
           const count = value === 'all' ? wishes.length : wishes.filter((w) => w.status === value).length
           return (
@@ -114,8 +114,8 @@ export function WishesPage({
               onClick={() => setStatusFilter(value)}
               className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
                 statusFilter === value
-                  ? 'bg-pink-dark text-white shadow-sm'
-                  : 'bg-white/80 text-gray-600 border border-gray-200 hover:bg-pink-soft'
+                  ? 'bg-[#FF2E93] text-white shadow-glow-sm'
+                  : 'bg-white/[0.04] text-slate-400 border border-white/[0.08] hover:bg-white/[0.08] hover:text-white'
               }`}
               aria-pressed={statusFilter === value}
             >
@@ -130,7 +130,7 @@ export function WishesPage({
           <motion.div key="empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <GlassCard className="text-center py-16">
               <p className="text-4xl mb-3">🌸</p>
-              <p className="text-gray-500">
+              <p className="text-slate-500">
                 {statusFilter === 'all' ? 'No wishes yet.' : `No ${statusFilter.replace('_', ' ')} wishes.`}
               </p>
               {isAdmin && statusFilter === 'all' && (
@@ -184,8 +184,8 @@ export function WishesPage({
       {/* Delete Modal */}
       <Modal open={!!deleteConfirm} onClose={() => setDeleteConfirm(null)} title="Delete Wish" size="sm">
         <div className="space-y-4">
-          <p className="text-sm text-gray-600">
-            Delete <span className="font-semibold">"{deleteConfirm?.title}"</span>? This cannot be undone.
+          <p className="text-sm text-slate-400">
+            Delete <span className="font-semibold text-white">"{deleteConfirm?.title}"</span>? This cannot be undone.
           </p>
           <div className="flex gap-3">
             <Button variant="ghost" fullWidth onClick={() => setDeleteConfirm(null)}>Cancel</Button>

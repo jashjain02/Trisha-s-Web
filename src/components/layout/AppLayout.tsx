@@ -12,13 +12,14 @@ interface AppLayoutProps {
 
 export function AppLayout({ children, user, isAdmin, onSignOut }: AppLayoutProps) {
   return (
-    <div className="min-h-screen bg-gradient-mesh">
+    <div className="min-h-screen bg-obsidian">
+      {/* Ambient background glow */}
       <div
         className="fixed inset-0 pointer-events-none"
         aria-hidden="true"
         style={{
           background:
-            'radial-gradient(at 20% 20%, #FFD6E7 0px, transparent 40%), radial-gradient(at 80% 10%, #F2E7FF 0px, transparent 40%), radial-gradient(at 10% 80%, #D9F2FF 0px, transparent 40%), radial-gradient(at 90% 80%, #FFECF4 0px, transparent 40%)',
+            'radial-gradient(ellipse at 20% 10%, rgba(255,46,147,0.05) 0px, transparent 55%), radial-gradient(ellipse at 80% 5%, rgba(168,85,247,0.04) 0px, transparent 50%), radial-gradient(ellipse at 50% 100%, rgba(255,46,147,0.03) 0px, transparent 60%)',
         }}
       />
       <Navbar user={user} isAdmin={isAdmin} onSignOut={onSignOut} />

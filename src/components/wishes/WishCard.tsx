@@ -55,7 +55,7 @@ export function WishCard({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05, duration: 0.4 }}
       layout
@@ -64,16 +64,32 @@ export function WishCard({
         hover
         className={`
           relative overflow-hidden
-          ${featured ? 'ring-2 ring-pink-300/50' : ''}
-          ${wish.status === 'fulfilled' ? 'opacity-75' : ''}
+          ${featured ? 'ring-1 ring-[#FF2E93]/30' : ''}
+          ${wish.status === 'fulfilled' ? 'opacity-60' : ''}
         `}
       >
         {featured && (
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-pink-400 to-lavender" />
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#FF2E93]/60 to-transparent" />
+        )}
+
+        {/* Fulfilled ribbon stamp */}
+        {wish.status === 'fulfilled' && (
+          <motion.div
+            className="absolute top-5 -right-10 rotate-45"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.2, type: 'spring', stiffness: 300, damping: 22 }}
+          >
+            <div className="border-y border-[#FF2E93]/40 px-10 py-0.5">
+              <span className="text-[10px] font-extrabold tracking-[0.25em] text-[#FF2E93] uppercase whitespace-nowrap">
+                Finished
+              </span>
+            </div>
+          </motion.div>
         )}
 
         <div className="flex items-start gap-4">
-          <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-gradient-to-br from-pink-100 to-lavender-soft flex items-center justify-center text-2xl">
+          <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center text-2xl">
             {emoji}
           </div>
 
@@ -84,11 +100,11 @@ export function WishCard({
                   <Badge label={STATUS_LABEL[wish.status] ?? wish.status} variant="status" />
                   <Badge label={wish.category} variant="category" />
                 </div>
-                <h3 className={`font-semibold text-gray-900 ${featured ? 'text-lg' : 'text-base'} leading-tight`}>
+                <h3 className={`font-semibold text-white ${featured ? 'text-lg' : 'text-base'} leading-tight tracking-tight`}>
                   {wish.title}
                 </h3>
                 {wish.description && (
-                  <p className="mt-1 text-sm text-gray-500 line-clamp-2">{wish.description}</p>
+                  <p className="mt-1 text-sm text-slate-400 line-clamp-2">{wish.description}</p>
                 )}
               </div>
 
@@ -96,14 +112,14 @@ export function WishCard({
                 <div className="flex gap-1 flex-shrink-0">
                   <button
                     onClick={() => onEdit?.(wish)}
-                    className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors"
+                    className="p-1.5 rounded-lg hover:bg-white/[0.08] text-slate-600 hover:text-white transition-colors"
                     aria-label="Edit wish"
                   >
                     <Edit2 size={14} />
                   </button>
                   <button
                     onClick={() => onDelete?.(wish)}
-                    className="p-1.5 rounded-lg hover:bg-red-50 text-gray-400 hover:text-red-500 transition-colors"
+                    className="p-1.5 rounded-lg hover:bg-rose-500/10 text-slate-600 hover:text-rose-400 transition-colors"
                     aria-label="Delete wish"
                   >
                     <Trash2 size={14} />
@@ -120,7 +136,7 @@ export function WishCard({
                     <Avatar key={a.userId} src={a.userPhotoURL} name={a.userName} size="xs" />
                   ))}
                 </div>
-                <span className="text-xs text-gray-500">
+                <span className="text-xs text-slate-500">
                   {applicants.length} friend{applicants.length !== 1 ? 's' : ''} want{applicants.length === 1 ? 's' : ''} this
                 </span>
               </div>
@@ -132,87 +148,65 @@ export function WishCard({
                 {wish.claimedByPhotoURL && (
                   <Avatar src={wish.claimedByPhotoURL} name={wish.claimedByName} size="xs" />
                 )}
-                <span className="text-xs text-gray-500">
-                  {wish.status === 'fulfilled'
-                    ? `Fulfilled by ${wish.fulfilledByName}`
-                    : wish.status === 'pending_review'
-                    ? `${wish.claimedByName} says it's done — waiting for your approval`
-                    : `Chosen: ${wish.claimedByName}`}
+                <span className="text-xs text-slate-400">
+                  <span className="text-slate-500">
+                    {wish.status === 'fulfilled' ? 'Fulfilled by' : 'Claimed by'}
+                  </span>{' '}
+                  <span className="font-semibold text-slate-200">{wish.claimedByName}</span>
                 </span>
               </div>
             )}
 
-            <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
-              <span className="flex items-center gap-1 text-xs text-gray-400">
-                <Clock size={11} />
-                {formatTimestamp(wish.createdAt)}
-              </span>
+            {/* Timestamp */}
+            <div className="mt-2 flex items-center gap-1 text-slate-600">
+              <Clock size={11} />
+              <span className="text-xs">{formatTimestamp(wish.createdAt)}</span>
+            </div>
 
-              <div className="flex gap-2 flex-wrap">
-                {/* Friend: apply to open wish */}
-                {canApply && (
-                  <Button variant="secondary" size="sm" onClick={() => onApply?.(wish)} icon={<span>✋</span>}>
-                    I'm Interested
-                  </Button>
-                )}
+            {/* Actions */}
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+              {canApply && (
+                <Button variant="primary" size="sm" onClick={() => onApply?.(wish)}>
+                  I'll Do This!
+                </Button>
+              )}
 
-                {/* Friend: already applied */}
-                {!isAdmin && hasApplied && wish.status === 'open' && (
-                  <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-medium bg-lavender-soft text-lavender border border-lavender/30">
-                    ✓ Applied
-                  </span>
-                )}
+              {!isAdmin && hasApplied && wish.status === 'open' && (
+                <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-medium bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                  ✓ Applied
+                </span>
+              )}
 
-                {/* Friend: chosen, can mark as submitted */}
-                {canSubmit && (
-                  <Button variant="primary" size="sm" onClick={() => onSubmit?.(wish)} icon={<Send size={13} />}>
-                    I Did It!
-                  </Button>
-                )}
+              {canSubmit && (
+                <Button variant="primary" size="sm" onClick={() => onSubmit?.(wish)} icon={<Send size={13} />}>
+                  I Did It!
+                </Button>
+              )}
 
-                {/* Admin: share new wish to WhatsApp */}
-                {isAdmin && wish.status === 'open' && (
-                  <button
-                    onClick={() => shareWishToWhatsApp(wish)}
-                    className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-medium bg-green-50 text-green-700 border border-green-200 hover:bg-green-100 transition-colors"
-                    title="Share to WhatsApp"
-                  >
-                    <span>📲</span> Notify Friends
-                  </button>
-                )}
+              {isAdmin && wish.status === 'open' && (
+                <button
+                  onClick={() => shareWishToWhatsApp(wish)}
+                  className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 transition-colors"
+                  title="Share to WhatsApp"
+                >
+                  <span>📲</span> Notify Friends
+                </button>
+              )}
 
-                {/* Admin: pick from applicants */}
-                {isAdmin && wish.status === 'open' && applicants.length > 0 && (
-                  <Button variant="secondary" size="sm" onClick={() => onSelectApplicant?.(wish)} icon={<User size={13} />}>
-                    Pick Someone
-                  </Button>
-                )}
+              {isAdmin && wish.status === 'open' && applicants.length > 0 && (
+                <Button variant="secondary" size="sm" onClick={() => onSelectApplicant?.(wish)} icon={<User size={13} />}>
+                  Pick Someone
+                </Button>
+              )}
 
-                {/* Admin: confirm fulfilled */}
-                {isAdmin && wish.status === 'pending_review' && (
-                  <Button variant="success" size="sm" onClick={() => onConfirmFulfilled?.(wish)} icon={<CheckCircle size={13} />}>
-                    Confirm ✓
-                  </Button>
-                )}
-              </div>
+              {isAdmin && wish.status === 'pending_review' && (
+                <Button variant="success" size="sm" onClick={() => onConfirmFulfilled?.(wish)} icon={<CheckCircle size={13} />}>
+                  Confirm ✓
+                </Button>
+              )}
             </div>
           </div>
         </div>
-
-        {wish.status === 'fulfilled' && (
-          <motion.div
-            className="absolute top-5 -right-10 rotate-45"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.2, type: 'spring', stiffness: 300, damping: 22 }}
-          >
-            <div className="border-y-2 border-pink-400/70 px-10 py-0.5">
-              <span className="text-[10px] font-extrabold tracking-[0.25em] text-pink-500 uppercase whitespace-nowrap">
-                Finished
-              </span>
-            </div>
-          </motion.div>
-        )}
 
         {/* Fulfillment proof photo */}
         {wish.fulfillmentPhotoURL && (
@@ -224,7 +218,7 @@ export function WishCard({
           >
             <button
               onClick={() => setLightboxOpen(true)}
-              className="shrink-0 rounded-full ring-2 ring-pink-200 hover:ring-pink-400 transition-all hover:scale-105"
+              className="shrink-0 rounded-full ring-1 ring-[#FF2E93]/30 hover:ring-[#FF2E93]/60 transition-all hover:scale-105"
               aria-label="View proof of fulfillment"
             >
               <img
@@ -233,7 +227,7 @@ export function WishCard({
                 className="w-11 h-11 rounded-full object-cover cursor-pointer"
               />
             </button>
-            <span className="text-xs font-medium text-pink-dark">📸 Proof of fulfillment</span>
+            <span className="text-xs font-medium text-[#FF2E93]">📸 Proof of fulfillment</span>
           </motion.div>
         )}
       </GlassCard>

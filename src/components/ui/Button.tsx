@@ -15,12 +15,12 @@ interface ButtonProps extends Omit<HTMLMotionProps<'button'>, 'children'> {
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    'bg-gradient-to-r from-pink-400 to-pink-dark text-white shadow-glass hover:shadow-glass-lg',
+    'bg-[#FF2E93] text-white shadow-glow-sm hover:shadow-glow hover:brightness-110',
   secondary:
-    'bg-white/80 text-gray-700 border border-pink-200 hover:bg-pink-soft hover:border-pink-300',
-  ghost: 'bg-transparent text-gray-600 hover:bg-pink-soft hover:text-pink-dark',
-  danger: 'bg-gradient-to-r from-rose-400 to-red-400 text-white shadow-md hover:shadow-lg',
-  success: 'bg-gradient-to-r from-emerald-400 to-green-400 text-white shadow-md hover:shadow-lg',
+    'bg-white/[0.06] text-slate-200 border border-white/[0.12] hover:bg-white/[0.10] hover:border-white/[0.18]',
+  ghost: 'bg-transparent text-slate-400 hover:bg-white/[0.06] hover:text-white',
+  danger: 'bg-rose-500/80 text-white border border-rose-500/40 hover:bg-rose-500 hover:shadow-[0_0_16px_rgba(244,63,94,0.3)]',
+  success: 'bg-emerald-500/80 text-white border border-emerald-500/40 hover:bg-emerald-500 hover:shadow-[0_0_16px_rgba(52,211,153,0.3)]',
 }
 
 const sizeStyles: Record<ButtonSize, string> = {
@@ -44,9 +44,9 @@ export function Button({
     <motion.button
       className={`
         inline-flex items-center justify-center font-medium
-        transition-colors duration-200
-        disabled:opacity-50 disabled:cursor-not-allowed
-        focus:outline-none focus:ring-2 focus:ring-pink-300 focus:ring-offset-2
+        transition-all duration-200
+        disabled:opacity-40 disabled:cursor-not-allowed
+        focus:outline-none focus:ring-2 focus:ring-[#FF2E93]/40 focus:ring-offset-2 focus:ring-offset-obsidian
         ${variantStyles[variant]}
         ${sizeStyles[size]}
         ${fullWidth ? 'w-full' : ''}

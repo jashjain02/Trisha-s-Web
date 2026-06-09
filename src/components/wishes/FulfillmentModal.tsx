@@ -89,20 +89,20 @@ export function FulfillmentModal({ wish, onClose, onConfirm }: FulfillmentModalP
     <Modal open={!!wish} onClose={handleClose} title="Confirm Wish Fulfilled 💖" size="md">
       <div className="space-y-4">
         {/* Wish info */}
-        <div className="p-3 bg-pink-soft rounded-xl border border-pink-100 flex items-center gap-3">
+        <div className="p-3 bg-[#FF2E93]/[0.06] rounded-xl border border-[#FF2E93]/20 flex items-center gap-3">
           {wish.claimedByPhotoURL && (
             <Avatar src={wish.claimedByPhotoURL} name={wish.claimedByName ?? ''} size="sm" />
           )}
           <div className="min-w-0">
-            <p className="text-xs text-gray-500">Fulfilled by</p>
-            <p className="text-sm font-semibold text-gray-800">{wish.claimedByName}</p>
-            <p className="text-xs text-gray-600 mt-0.5 truncate">"{wish.title}"</p>
+            <p className="text-xs text-slate-500">Fulfilled by</p>
+            <p className="text-sm font-semibold text-slate-200">{wish.claimedByName}</p>
+            <p className="text-xs text-slate-400 mt-0.5 truncate">"{wish.title}"</p>
           </div>
         </div>
 
         {/* Upload area */}
         <div>
-          <p className="text-sm font-medium text-gray-700 mb-2">
+          <p className="text-sm font-medium text-slate-300 mb-2">
             Upload a photo as proof 📸
           </p>
 
@@ -113,17 +113,17 @@ export function FulfillmentModal({ wish, onClose, onConfirm }: FulfillmentModalP
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0 }}
-                className="relative rounded-2xl overflow-hidden border-2 border-pink-200"
+                className="relative rounded-2xl overflow-hidden border border-white/[0.10]"
               >
                 <img src={preview} alt="Fulfillment proof" className="w-full h-52 object-cover" />
                 <button
                   onClick={() => { setPreview(null); setFile(null) }}
-                  className="absolute top-2 right-2 w-7 h-7 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-colors"
+                  className="absolute top-2 right-2 w-7 h-7 bg-black/60 hover:bg-black/80 text-white rounded-full flex items-center justify-center transition-colors border border-white/[0.15]"
                   aria-label="Remove photo"
                 >
                   <X size={14} />
                 </button>
-                <div className="absolute bottom-2 left-2 bg-black/50 text-white text-xs px-2 py-1 rounded-lg">
+                <div className="absolute bottom-2 left-2 bg-black/60 text-white text-xs px-2 py-1 rounded-lg border border-white/[0.10]">
                   {file?.name}
                 </div>
               </motion.div>
@@ -133,14 +133,14 @@ export function FulfillmentModal({ wish, onClose, onConfirm }: FulfillmentModalP
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="border-2 border-dashed border-pink-200 rounded-2xl p-8 text-center cursor-pointer hover:border-pink-400 hover:bg-pink-soft/30 transition-all"
+                className="border border-dashed border-white/[0.12] rounded-2xl p-8 text-center cursor-pointer hover:border-[#FF2E93]/40 hover:bg-[#FF2E93]/[0.03] transition-all"
                 onClick={() => inputRef.current?.click()}
                 onDrop={handleDrop}
                 onDragOver={(e) => e.preventDefault()}
               >
-                <ImageIcon size={32} className="mx-auto text-pink-300 mb-2" />
-                <p className="text-sm font-medium text-gray-700">Drop a photo here</p>
-                <p className="text-xs text-gray-400 mt-1">or click to browse · max 10MB</p>
+                <ImageIcon size={32} className="mx-auto text-slate-600 mb-2" />
+                <p className="text-sm font-medium text-slate-300">Drop a photo here</p>
+                <p className="text-xs text-slate-600 mt-1">or click to browse · max 10MB</p>
               </motion.div>
             )}
           </AnimatePresence>
@@ -157,13 +157,13 @@ export function FulfillmentModal({ wish, onClose, onConfirm }: FulfillmentModalP
         {/* Upload progress */}
         {uploading && (
           <div className="space-y-1">
-            <div className="flex justify-between text-xs text-gray-500">
+            <div className="flex justify-between text-xs text-slate-500">
               <span>Uploading…</span>
               <span>{progress.toFixed(0)}%</span>
             </div>
-            <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+            <div className="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
               <motion.div
-                className="h-full bg-gradient-to-r from-pink-400 to-lavender rounded-full"
+                className="h-full bg-[#FF2E93] rounded-full"
                 animate={{ width: `${progress}%` }}
                 transition={{ duration: 0.3 }}
               />
@@ -171,7 +171,7 @@ export function FulfillmentModal({ wish, onClose, onConfirm }: FulfillmentModalP
           </div>
         )}
 
-        {error && <p className="text-xs text-red-500">{error}</p>}
+        {error && <p className="text-xs text-rose-400">{error}</p>}
 
         <div className="flex gap-3">
           <Button variant="ghost" fullWidth onClick={handleClose} disabled={uploading}>

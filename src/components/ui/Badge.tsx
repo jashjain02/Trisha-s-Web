@@ -7,19 +7,21 @@ interface BadgeProps {
 }
 
 const STATUS_STYLES: Record<string, string> = {
-  open: 'bg-blue-100 text-blue-700 border border-blue-200',
-  claimed: 'bg-amber-100 text-amber-700 border border-amber-200',
-  fulfilled: 'bg-emerald-100 text-emerald-700 border border-emerald-200',
+  open: 'bg-sky-500/10 text-sky-400 border border-sky-500/20',
+  'in progress': 'bg-amber-500/10 text-amber-400 border border-amber-500/20',
+  claimed: 'bg-amber-500/10 text-amber-400 border border-amber-500/20',
+  fulfilled: 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20',
+  pending_review: 'bg-orange-500/10 text-orange-400 border border-orange-500/20',
 }
 
 export function Badge({ label, variant = 'category', className = '' }: BadgeProps) {
   if (variant === 'status') {
     return (
       <span
-        className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold capitalize ${STATUS_STYLES[label] ?? 'bg-gray-100 text-gray-600'} ${className}`}
+        className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold capitalize ${STATUS_STYLES[label] ?? 'bg-white/[0.06] text-slate-400 border border-white/[0.10]'} ${className}`}
       >
         {label === 'open' && '○'}
-        {label === 'claimed' && '◐'}
+        {(label === 'claimed' || label === 'in progress') && '◐'}
         {label === 'fulfilled' && '●'}
         {label}
       </span>
@@ -29,7 +31,7 @@ export function Badge({ label, variant = 'category', className = '' }: BadgeProp
   if (variant === 'points') {
     return (
       <span
-        className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-gradient-to-r from-pink-100 to-lavender-soft text-pink-dark border border-pink-200 ${className}`}
+        className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#FF2E93]/10 text-[#FF2E93] border border-[#FF2E93]/20 ${className}`}
       >
         ⭐ {label}
       </span>
@@ -39,7 +41,7 @@ export function Badge({ label, variant = 'category', className = '' }: BadgeProp
   const emoji = CATEGORY_EMOJI[label] ?? '✨'
   return (
     <span
-      className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-white/80 border border-pink-100 text-gray-600 ${className}`}
+      className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-white/[0.04] border border-white/[0.08] text-slate-400 ${className}`}
     >
       {emoji} {label}
     </span>

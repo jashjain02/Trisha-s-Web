@@ -26,7 +26,7 @@ export function Avatar({ src, name, size = 'md', className = '' }: AvatarProps) 
       <img
         src={src}
         alt={name}
-        className={`rounded-full object-cover ring-2 ring-white shadow-sm ${sizeMap[size]} ${className}`}
+        className={`rounded-full object-cover ring-1 ring-white/[0.15] shadow-sm ${sizeMap[size]} ${className}`}
         onError={(e) => {
           const target = e.currentTarget as HTMLImageElement
           target.style.display = 'none'
@@ -39,7 +39,7 @@ export function Avatar({ src, name, size = 'md', className = '' }: AvatarProps) 
 
   return (
     <div
-      className={`rounded-full bg-gradient-to-br from-pink-300 to-lavender flex items-center justify-center font-bold text-white ring-2 ring-white shadow-sm ${sizeMap[size]} ${className}`}
+      className={`rounded-full bg-gradient-to-br from-[#FF2E93]/80 to-purple-600/80 flex items-center justify-center font-bold text-white ring-1 ring-white/[0.15] shadow-sm ${sizeMap[size]} ${className}`}
       aria-label={name}
     >
       {initials}
