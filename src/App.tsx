@@ -16,6 +16,7 @@ import { useActivities } from './hooks/useActivities'
 import { useConfetti } from './hooks/useConfetti'
 import { FulfillmentModal } from './components/wishes/FulfillmentModal'
 import { AppLayout } from './components/layout/AppLayout'
+import { AppTour } from './components/ui/AppTour'
 import { LandingPage } from './pages/LandingPage'
 import { OnboardingPage } from './pages/OnboardingPage'
 import { PendingPage } from './pages/PendingPage'
@@ -241,6 +242,7 @@ export default function App() {
 
   return (
     <AppLayout user={currentUserData} isAdmin={isAdmin} onSignOut={signOut}>
+      <AppTour isAdmin={isAdmin} userId={user.id} />
       <FulfillmentModal
         wish={fulfillmentWish}
         onClose={() => setFulfillmentWish(null)}

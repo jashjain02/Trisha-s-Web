@@ -57,6 +57,7 @@ export function Navbar({ user, isAdmin, onSignOut }: NavbarProps) {
                 <Link
                   key={to}
                   to={to}
+                  data-tour={`nav-${label.toLowerCase()}`}
                   className={`
                     relative flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-all duration-200
                     ${active
@@ -80,6 +81,7 @@ export function Navbar({ user, isAdmin, onSignOut }: NavbarProps) {
             {isAdmin && (
               <Link
                 to="/admin"
+                data-tour="nav-admin"
                 className={`relative flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-all duration-200 ${
                   location.pathname === '/admin'
                     ? 'text-white bg-white/[0.08]'
@@ -99,7 +101,7 @@ export function Navbar({ user, isAdmin, onSignOut }: NavbarProps) {
           </nav>
 
           <div className="flex items-center gap-2">
-            <div className="hidden sm:flex items-center gap-2 px-3 py-1 bg-[#FF2E93]/[0.10] rounded-xl border border-[#FF2E93]/20">
+            <div data-tour="points-badge" className="hidden sm:flex items-center gap-2 px-3 py-1 bg-[#FF2E93]/[0.10] rounded-xl border border-[#FF2E93]/20">
               <span className="text-xs font-bold text-[#FF2E93]">⭐ {user.points} pts</span>
             </div>
             <Avatar src={user.photoURL} name={user.name} size="sm" />

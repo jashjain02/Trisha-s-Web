@@ -97,7 +97,7 @@ export function WishesPage({
           </p>
         </div>
         {isAdmin && (
-          <Button variant="primary" size="md" onClick={() => setCreateOpen(true)} icon={<Plus size={16} />}>
+          <Button variant="primary" size="md" onClick={() => setCreateOpen(true)} icon={<Plus size={16} />} data-tour="new-wish-btn">
             New Wish
           </Button>
         )}
