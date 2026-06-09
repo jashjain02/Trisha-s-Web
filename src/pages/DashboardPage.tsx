@@ -142,10 +142,10 @@ export function DashboardPage({
 
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <StatCard label="Total Points" value={users.reduce((s, u) => s + u.points, 0)} icon={<TrendingUp />} color="from-[#FF2E93]/[0.08] to-purple-500/[0.04]" delay={0.05} />
-        <StatCard label="Total Wishes" value={stats.totalWishes} icon={<Heart />} color="from-[#FF2E93]/[0.06] to-[#FF2E93]/[0.02]" delay={0.1} />
-        <StatCard label="Fulfilled" value={stats.fulfilledWishes} icon={<span>✅</span>} color="from-emerald-500/[0.08] to-emerald-500/[0.03]" delay={0.15} />
-        <StatCard label="Top Friend" value={stats.topFriend?.name.split(' ')[0] ?? '—'} icon={<Trophy />} color="from-amber-500/[0.08] to-amber-500/[0.03]" delay={0.2} />
+        <StatCard label="Total Points" value={users.reduce((s, u) => s + u.points, 0)} icon={<TrendingUp />} delay={0.05} />
+        <StatCard label="Total Wishes" value={stats.totalWishes} icon={<Heart />} delay={0.1} />
+        <StatCard label="Fulfilled" value={stats.fulfilledWishes} icon={<span>✅</span>} delay={0.15} />
+        <StatCard label="Top Friend" value={stats.topFriend?.name.split(' ')[0] ?? '—'} icon={<Trophy />} delay={0.2} />
       </div>
 
       <div className="grid lg:grid-cols-3 gap-6">

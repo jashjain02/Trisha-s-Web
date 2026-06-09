@@ -11,7 +11,7 @@ interface StatCardProps {
   delay?: number
 }
 
-export function StatCard({ label, value, trend, color = 'from-[#FF2E93]/[0.08] to-purple-500/[0.04]', delay = 0 }: StatCardProps) {
+export function StatCard({ label, value, trend, color = 'from-white/[0.02] to-transparent', delay = 0 }: StatCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
