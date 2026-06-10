@@ -10,8 +10,8 @@ const ADMIN_STEPS: Step[] = [
   {
     target: 'body',
     placement: 'center',
-    title: "Welcome to your Friendship Vault 💖",
-    content: "This is Trisha's Friendship Vault — your personal wish fulfillment platform. Your friends will compete to make your wishes come true. Let's take a quick tour!",
+    title: "Welcome to your Main Character Era 💖",
+    content: "This is Trishtrashh's Main Character Era — your personal wish fulfillment platform. Your friends will compete to make your wishes come true. Let's take a quick tour!",
   },
   {
     target: '[data-tour="nav-wishes"]',
@@ -39,7 +39,7 @@ const FRIEND_STEPS: Step[] = [
   {
     target: 'body',
     placement: 'center',
-    title: "Welcome to Trisha's Friendship Vault 💖",
+    title: "Welcome to Trishtrashh's Main Character Era 💖",
     content: "You've been approved! This is where you fulfill Trisha's wishes and earn friendship points. Let's show you around.",
   },
   {
