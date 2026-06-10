@@ -103,7 +103,7 @@ export function LandingPage({ onEnter, loading, error }: LandingPageProps) {
             💖
           </motion.span>
           <span className="text-sm font-semibold text-slate-300 tracking-wide">
-            Trisha's Friendship Value™ · Birthday Edition
+            Trisha's Friendship Vault™ · Birthday Edition
           </span>
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
         </motion.div>
@@ -118,7 +118,7 @@ export function LandingPage({ onEnter, loading, error }: LandingPageProps) {
           Welcome to{' '}
           <span className="relative inline-block">
             <span className="bg-gradient-to-r from-[#FF2E93] via-[#FF2E93] to-purple-400 bg-clip-text text-transparent">
-              Trisha's Friendship Value
+              Trisha's Friendship Vault
             </span>
             <span className="text-[#FF2E93] align-super text-xl font-black">™</span>
           </span>

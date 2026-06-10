@@ -39,7 +39,7 @@ function LoadingScreen() {
     >
       <div className="text-5xl animate-bounce-slow">💖</div>
       <p className="mt-4 text-sm text-gray-500 font-medium animate-pulse">
-        Loading Trisha's Friendship Value™…
+        Loading Trisha's Friendship Vault™…
       </p>
     </div>
   )

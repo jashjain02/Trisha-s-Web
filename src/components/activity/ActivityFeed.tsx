@@ -13,7 +13,7 @@ const ACTIVITY_MESSAGES: Record<string, (a: Activity) => string> = {
   wish_fulfilled: (a) => `fulfilled "${a.wishTitle}" ✅`,
   wish_created: (a) => `posted a new wish: "${a.wishTitle}" 💖`,
   points_earned: (a) => `earned ${a.points} friendship points ⭐`,
-  joined: () => `joined Trisha's Friendship Value 🎉`,
+  joined: () => `joined Trisha's Friendship Vault 🎉`,
 }
 
 const ACTIVITY_COLORS: Record<string, string> = {
