@@ -10,8 +10,8 @@ const ADMIN_STEPS: Step[] = [
   {
     target: 'body',
     placement: 'center',
-    title: 'Welcome to your Exchange 💖',
-    content: "This is Trisha's Exchange — your personal wish fulfillment platform. Your friends will compete to make your wishes come true. Let's take a quick tour!",
+    title: "Welcome to your Friendship Value 💖",
+    content: "This is Trisha's Friendship Value — your personal wish fulfillment platform. Your friends will compete to make your wishes come true. Let's take a quick tour!",
   },
   {
     target: '[data-tour="nav-wishes"]',
@@ -39,7 +39,7 @@ const FRIEND_STEPS: Step[] = [
   {
     target: 'body',
     placement: 'center',
-    title: "Welcome to Trisha's Exchange 💖",
+    title: "Welcome to Trisha's Friendship Value 💖",
     content: "You've been approved! This is where you fulfill Trisha's wishes and earn friendship points. Let's show you around.",
   },
   {

@@ -7,7 +7,7 @@ import { StatCard } from '../components/ui/StatCard'
 import { Avatar } from '../components/ui/Avatar'
 import { WishCard } from '../components/wishes/WishCard'
 import { ApplicantPicker } from '../components/wishes/ApplicantPicker'
-import { ADMIN_EMAIL } from '../utils/constants'
+import { ADMIN_EMAILS } from '../utils/constants'
 import type { Wish, WishApplicant, User } from '../types'
 
 interface DashboardPageProps {
@@ -44,7 +44,7 @@ export function DashboardPage({
       users.length > 0 ? users.reduce((best, u) => (u.points > best.points ? u : best), users[0]) : null
     return { totalWishes, fulfilledWishes, openWishes, claimedWishes, topFriend }
   }, [wishes, users])
-  const isTrisha = currentUser.email === ADMIN_EMAIL
+  const isTrisha = ADMIN_EMAILS.includes(currentUser.email.toLowerCase())
   const greeting = isTrisha ? `Hi Trisha 💖` : `Welcome back, ${currentUser.name.split(' ')[0]} ✨`
 
   const featuredWish = useMemo(

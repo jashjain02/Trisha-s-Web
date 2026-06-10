@@ -37,7 +37,7 @@ export function Navbar({ user, isAdmin, onSignOut }: NavbarProps) {
         <div
           className="bg-white/[0.04] backdrop-blur-2xl border border-white/[0.08] rounded-2xl shadow-glass px-4 py-2.5 flex items-center justify-between"
         >
-          <Link to="/dashboard" className="flex items-center gap-2 group" aria-label="Trisha's Exchange Home">
+          <Link to="/dashboard" className="flex items-center gap-2 group" aria-label="Trisha's Friendship Value Home">
             <motion.span
               className="text-xl"
               animate={{ rotate: [0, 10, -10, 0] }}
@@ -46,7 +46,7 @@ export function Navbar({ user, isAdmin, onSignOut }: NavbarProps) {
               💖
             </motion.span>
             <span className="font-bold text-white text-sm hidden sm:block tracking-tight">
-              Trisha's Exchange<span className="text-[#FF2E93] align-super text-[10px]">™</span>
+              Trisha's Friendship Value<span className="text-[#FF2E93] align-super text-[10px]">™</span>
             </span>
           </Link>
 

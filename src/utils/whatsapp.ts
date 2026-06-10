@@ -16,7 +16,7 @@ export function openWhatsApp(phone: string, message: string) {
 
 export function shareWishToWhatsApp(wish: { title: string; category: string; description?: string }) {
   const text = [
-    `💖 *New Wish on Trisha's Exchange™*`,
+    `💖 *New Wish on Trisha's Friendship Value™*`,
     ``,
     `Trisha wants: *${wish.title}*`,
     wish.description ? `"${wish.description}"` : null,

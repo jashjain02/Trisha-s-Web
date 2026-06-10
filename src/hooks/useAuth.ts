@@ -8,7 +8,7 @@ import {
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore'
 import { auth, db, googleProvider } from '../lib/firebase'
 import type { User } from '../types'
-import { ADMIN_EMAIL, INITIAL_POINTS } from '../utils/constants'
+import { ADMIN_EMAILS, INITIAL_POINTS } from '../utils/constants'
 
 interface AuthState {
   user: User | null
@@ -41,7 +41,7 @@ export function useAuth() {
       }
 
       try {
-        const isAdmin = firebaseUser.email === ADMIN_EMAIL
+        const isAdmin = ADMIN_EMAILS.includes((firebaseUser.email || '').toLowerCase())
         const userRef = doc(db, 'users', firebaseUser.uid)
         const userSnap = await getDoc(userRef)
 

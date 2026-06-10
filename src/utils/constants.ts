@@ -1,4 +1,9 @@
-export const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL || ''
+export const ADMIN_EMAILS = (import.meta.env.VITE_ADMIN_EMAIL || '')
+  .split(',')
+  .map((e: string) => e.trim().toLowerCase())
+  .filter(Boolean)
+
+export const ADMIN_EMAIL = ADMIN_EMAILS[0] || ''
 
 export const POINTS = {
   CLAIM_WISH: 5,
